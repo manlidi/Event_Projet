@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 
 
 import org.json.JSONArray;
@@ -24,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ContentListe.Listener listener;
     RecyclerView recyclerView;
     List<Event> events;
     private static String JSON_URL = "https://mkdelice.000webhostapp.com/json/json.json";
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         events = new ArrayList<>();
         GetData getData = new GetData();
         getData.execute();
+
     }
 
     public class GetData extends AsyncTask<String, String, String> {
@@ -104,9 +107,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void PutDataIntoRecyclerView(List<Event> chaine_List){
-        ContentListe contentListe = new ContentListe(this, events);
+        setOnClick();
+        ContentListe contentListe = new ContentListe(this, events, listener);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(contentListe);
     }
 
+    private void setOnClick() {
+        listener = new ContentListe.Listener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent intent = new Intent(getApplicationContext(), DetailsEvent.class);
+                intent.putExtra("descriptions", events.get(position).getDescription());
+                startActivity(intent);
+            }
+        };
     }
+
+}

@@ -18,10 +18,12 @@ public class ContentListe extends RecyclerView.Adapter<ContentListe.ViewHolder> 
 
     private Context context;
     private List<Event> events;
+    private Listener listener;
 
-    public ContentListe(Context context, List<Event> events){
+    public ContentListe(Context context, List<Event> events, Listener listener){
         this.context = context;
         this.events = events;
+        this.listener = listener;
     }
 
     @NonNull
@@ -46,7 +48,11 @@ public class ContentListe extends RecyclerView.Adapter<ContentListe.ViewHolder> 
         return events.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public interface Listener{
+        void onClick(View v, int position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView eventTitle,eventDescription;
         ImageView CoverImage;
@@ -56,7 +62,13 @@ public class ContentListe extends RecyclerView.Adapter<ContentListe.ViewHolder> 
             eventTitle = itemView.findViewById(R.id.eventTitle);
             eventDescription = itemView.findViewById(R.id.eventDescription);
             CoverImage = itemView.findViewById(R.id.coverImage);
+            itemView.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onClick(v, getAdapterPosition());
         }
     }
 }
