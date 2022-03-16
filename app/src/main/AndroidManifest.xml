@@ -11,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyProjetEvent">
         <activity
+            android:name=".Ajout"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailsEvent"
             android:exported="false" />
         <activity
@@ -18,7 +24,7 @@
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Accueil"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
