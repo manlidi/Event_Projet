@@ -118,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getApplicationContext(), DetailsEvent.class);
+                intent.putExtra("titre", events.get(position).getTitle());
                 intent.putExtra("descriptions", events.get(position).getDescription());
+                intent.putExtra("image", events.get(position).getCoverImage());
                 startActivity(intent);
             }
         };
